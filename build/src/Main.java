@@ -21,10 +21,13 @@ public class Main {
 
         //String json = "{\"type\":\"Point\",\"coordinates\": [23.5,20.125]}";
         try {
-            Pool pool = gson.fromJson(new FileReader("test.json"), Pool.class);
-            System.out.println(pool.coordinates[0]);
-            System.out.println(pool.coordinates[1]);
-            System.out.println(pool.properties.NAME);
+            Pool[] pools = gson.fromJson(new FileReader("wading-pools.json"), Pool[].class);
+            int j = 0;
+            for (int i = 0; i < pools.length; i++) {
+                System.out.println(pools[i]);
+                j++;
+            }
+            System.out.println(j);
         }
         catch(FileNotFoundException ex){
             System.out.println("File not found!");
