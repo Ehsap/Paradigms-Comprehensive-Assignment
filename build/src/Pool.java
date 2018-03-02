@@ -8,7 +8,7 @@ public class Pool {
     public Double[] coordinates;
 
     public String toString(){
-        return properties.NAME + "  " + "[" + geometry.coordinates[0] + ", "
+        return "'" + properties.NAME + "'" + "," + "[" + geometry.coordinates[0] + ", "
                 + geometry.coordinates[1] + "]";
     }
 }
