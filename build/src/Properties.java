@@ -4,4 +4,5 @@
 
 public class Properties {
     public String NAME;
+    public Geometry geometry;
 }
