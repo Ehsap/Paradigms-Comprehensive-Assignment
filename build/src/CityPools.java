@@ -3,8 +3,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 
 /*
@@ -26,13 +27,58 @@ public class CityPools {
                 .create();
         try {
             Pool[] pools = gson.fromJson(new FileReader("wading-pools-min.json"), Pool[].class);
-            //SortbyLongitude sortLong = new SortbyLongitude();
             Arrays.sort(pools);
-            for (int i = 0; i < pools.length; i++)
-                System.out.println(pools[i]);
+            //Find the closest pool to Glen Cairn
+            Pool closestPool ;
+            Double d = 9999.9;
+            Double x;
+            for (int i = 0; i < pools.length && i != 10; i++){
+                x = euclidDistance(pools[i].geometry.coordinates[1],pools[i].geometry.coordinates[0],
+                        pools[10].geometry.coordinates[1],pools[10].geometry.coordinates[0]);
+                if (x<d) {
+                    d = x;
+                    closestPool = pools[i];
+                    System.out.println(closestPool);
+                }
+            }
+
         } catch (FileNotFoundException ex) {
             System.out.println("File not found!");
         }
+    }
+
+    public class Node{
+        Node parent; //Parent of the current node
+        Pool info; //Info about the current node
+        List<Node> children; //Children of current node
+
+        public Node(Pool info){
+            this.info = info;
+            children = new ArrayList<Node>(0);
+        }
+
+        public void addChild(Node childNode, int position){
+            childNode.parent = this;
+            this.children.set(position,childNode);
+        }
+    }
+
+    public class Tree{
+        public Node root;
+        public Tree(){}
+
+        public void addRoot(Pool pool){
+            root = new Node(pool);
+            root.parent = null;
+            root.children = new ArrayList<Node>(0);
+        }
+
+        //Adds node as child of the closest pool
+        public void addNode(Node u, Pool pool, int i){
+            Node child = new Node(pool);
+            u.addChild(child, i);
+        }
+
     }
     public static double euclidDistance(double lat1, double lon1, double lat2, double lon2){
        double rLat1 = Math.toRadians(lat1);

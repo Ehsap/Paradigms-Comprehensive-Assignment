@@ -16,7 +16,7 @@ public class Pool implements Comparable<Pool> {
         return this.geometry.coordinates[0].compareTo(other.geometry.coordinates[0]);
     }
     public String toString(){
-        return "'" + properties.NAME + "'" + "," + "[" + geometry.coordinates[0] + ", "
+        return   properties.NAME  + "[" + geometry.coordinates[0] + ", "
                 + geometry.coordinates[1] + "]";
     }
 }
