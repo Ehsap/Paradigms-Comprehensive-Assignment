@@ -9,6 +9,7 @@ public class Node{
     Node parent; //Parent of the current node
     Pool info; //Info about the current node
     List<Node> children; //Children of current node
+    int index = 0; //Used to iterate through the children
 
     public Node(Pool info){
         this.info = info;

@@ -16,12 +16,12 @@ Comprehensive Assignment
 
 public class CityPools {
 
-    public static void main(String[]args){
-        sortPools();
-    }
+    //public static void main(String[]args){
+       // sortPools();
+    //}
 
     //Sorts the pools from west to east
-    public static void sortPools() {
+    public void sortPools() {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapterFactory(new GeometryAdapterFactory())
                 .create();
@@ -52,7 +52,7 @@ public class CityPools {
     }
 
 
-    public static double euclidDistance(double lat1, double lon1, double lat2, double lon2){
+    public double euclidDistance(double lat1, double lon1, double lat2, double lon2){
        double rLat1 = Math.toRadians(lat1);
        double rLat2 = Math.toRadians(lat2);
        double rLon1 = Math.toRadians(lon1);

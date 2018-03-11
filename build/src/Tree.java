@@ -5,7 +5,7 @@ import java.util.ArrayList;
  */
 public class Tree{
     public Node root;
-    public Tree(){}
+    public Tree(Node first){}
 
     public void addRoot(Pool pool){
         root = new Node(pool);
@@ -17,6 +17,14 @@ public class Tree{
     public void addNode(Node u, Pool pool){
         Node child = new Node(pool);
         u.addChild(child);
+    }
+
+    //Preorder traversal through each node in the tree
+    public void preOrder(Node root){
+        if (root != null){
+            System.out.println(root.info);
+            preOrder(root.children.get(root.index++));
+        }
     }
 
 }
