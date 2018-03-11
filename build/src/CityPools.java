@@ -33,19 +33,30 @@ public class CityPools {
             tree.addNode(tree.root,pools[1]); //Add the closest pool to the root as the first child
 
             //Add each pool from west to east into the tree, where edges are made between the closest pools
-            Pool closestPool ;
+            Pool closestPool = pools[0];
             Double closestDistance = 9999.9;
+            int poolToAdd = 0; //Index of the next pool to add
+            int mostRecentPool = 1; //Index of the most recently added pool to the tree
             Double currentDistance;
-            for (int i = 1; i < pools.length; i++){
-                currentDistance = euclidDistance(pools[i].geometry.coordinates[1],pools[i].geometry.coordinates[0],
-                        pools[0].geometry.coordinates[1],pools[0].geometry.coordinates[0]);
-                if (currentDistance < closestDistance) {
-                    closestDistance = currentDistance;
-                    closestPool = pools[i];
-                    System.out.println(closestPool);
-                }
-            }
 
+            //Longitude = coordinates[0] Latitude = coordinates[1]
+            for (int i = 2; i < pools.length; i++){
+                for (int j = 0; j < mostRecentPool; j++){
+                    currentDistance = euclidDistance(pools[i].geometry.coordinates[1],
+                                      pools[i].geometry.coordinates[0], pools[j].geometry.coordinates[1],
+                                      pools[j].geometry.coordinates[0]);
+
+                    if(currentDistance < closestDistance)
+                    {
+                        closestDistance = currentDistance;
+                        closestPool = pools[j];
+                    }
+                }
+                closestDistance = 9999.9;
+                mostRecentPool++;
+                tree.addEdge(tree.root,closestPool,pools[i]);
+            }
+            
         } catch (FileNotFoundException ex) {
             System.out.println("File not found!");
         }

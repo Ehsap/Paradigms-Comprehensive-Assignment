@@ -5,7 +5,7 @@ import java.util.ArrayList;
  */
 public class Tree{
     public Node root;
-    public Tree(Node first){}
+    public Tree(){}
 
     public void addRoot(Pool pool){
         root = new Node(pool);
@@ -23,8 +23,23 @@ public class Tree{
     public void preOrder(Node root){
         if (root != null){
             System.out.println(root.info);
-            preOrder(root.children.get(root.index++));
+            for (Node i : root.children){
+                preOrder(root.children.get(root.children.indexOf(i)));
+            }
         }
     }
+
+    //Add an edge between an existing pool in the tree and a new pool
+    public void addEdge(Node root, Pool closestPool, Pool newPool) {
+        if (root != null) {
+            if (root.info.equals(closestPool)) {
+                this.addNode(root, newPool);
+            }
+            for (Node i : root.children) {
+                addEdge(root.children.get(root.children.indexOf(i)), closestPool, newPool);
+            }
+        }
+    }
+
 
 }
