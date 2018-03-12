@@ -30,7 +30,7 @@ public class Tree{
     public void preOrder(Node root){
         if (root != null){
             //Store the route in an array, route0] = first stop, route[1] = 2nd stop...etc
-            System.out.println("Added " + root.info);
+            System.out.println("Added " + root.info + " to route");
             route.add(root.info);
 
             for (Node i : root.children){
@@ -62,7 +62,7 @@ public class Tree{
     public void addEdge(Node root, Pool closestPool, Pool newPool, Double distance) {
         if (root != null) {
             if (root.info.equals(closestPool)) {
-                //System.out.println("EDGE created from " + root.info + "  to  " + newPool);
+                System.out.println("EDGE CREATED from: " + root.info + "  to  " + newPool);
                 this.addNode(root, newPool, distance);
             }
             for (Node i : root.children) {

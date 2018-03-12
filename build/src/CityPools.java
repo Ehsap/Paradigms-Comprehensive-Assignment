@@ -21,16 +21,18 @@ public class CityPools {
     //}
 
     //Sorts the pools from west to east
-    public void sortPools() {
+    public void sortPools(String file) {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapterFactory(new GeometryAdapterFactory())
                 .create();
         try {
-            Pool[] pools = gson.fromJson(new FileReader("wading-pools-min.json"), Pool[].class);
+            //Should be reading from "wading-pools-min.json"
+            Pool[] pools = gson.fromJson(new FileReader(file), Pool[].class);
             Arrays.sort(pools); //Sorted from west to east
-            /*for(int i = 0; i < pools.length; i++){
+            System.out.println("*****POOLS SORTED FROM WEST TO EAST*****");
+            for(int i = 0; i < pools.length; i++){
                 System.out.println(pools[i]);
-            }*/
+            }
             Tree tree = new Tree();
             tree.addRoot(pools[0]); //Add the most western pool as the root
             //Add each pool from west to east into the tree, where edges are made between the closest pools

@@ -7,7 +7,7 @@ import java.util.LinkedList;
 public class Main {
     public static void main(String[]args){
         CityPools cityPools = new CityPools();
-        cityPools.sortPools();
+        cityPools.sortPools(args[0]);
 
     }
 }
