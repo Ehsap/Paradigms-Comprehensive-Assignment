@@ -28,20 +28,22 @@ public class CityPools {
         try {
             Pool[] pools = gson.fromJson(new FileReader("wading-pools-min.json"), Pool[].class);
             Arrays.sort(pools); //Sorted from west to east
+            /*for(int i = 0; i < pools.length; i++){
+                System.out.println(pools[i]);
+            }*/
             Tree tree = new Tree();
             tree.addRoot(pools[0]); //Add the most western pool as the root
-            tree.addNode(tree.root,pools[1]); //Add the closest pool to the root as the first child
-
             //Add each pool from west to east into the tree, where edges are made between the closest pools
             Pool closestPool = pools[0];
             Double closestDistance = 9999.9;
-            int poolToAdd = 0; //Index of the next pool to add
-            int mostRecentPool = 1; //Index of the most recently added pool to the tree
+            //int poolToAdd = 0; //Index of the next pool to add
+            int mostRecentPool = 0; //Index of the most recently added pool to the tree
             Double currentDistance;
 
             //Longitude = coordinates[0] Latitude = coordinates[1]
-            for (int i = 2; i < pools.length; i++){
-                for (int j = 0; j < mostRecentPool; j++){
+            //FIND THE CLOSEST POOL
+            for (int i = 1; i < pools.length; i++){
+                for (int j = 0; j <= mostRecentPool; j++){
                     currentDistance = euclidDistance(pools[i].geometry.coordinates[1],
                                       pools[i].geometry.coordinates[0], pools[j].geometry.coordinates[1],
                                       pools[j].geometry.coordinates[0]);
@@ -52,11 +54,15 @@ public class CityPools {
                         closestPool = pools[j];
                     }
                 }
+                //Create an edge between the closest pool and the new pool
+                tree.addEdge(tree.root,closestPool,pools[i],closestDistance);
                 closestDistance = 9999.9;
                 mostRecentPool++;
-                tree.addEdge(tree.root,closestPool,pools[i]);
             }
-            
+            tree.preOrder(tree.root);
+            tree.printRoute();
+
+
         } catch (FileNotFoundException ex) {
             System.out.println("File not found!");
         }
