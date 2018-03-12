@@ -1,3 +1,6 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,13 +42,19 @@ public class Tree{
     //Prints the pre-order route
     public void printRoute(){
         Double totalDistance = 0.0;
-        System.out.println(route.get(0).properties.NAME + " " + totalDistance); //Root pool, distance is 0 by default
-        for (int i = 1; i< route.size(); i++){
-            System.out.println(route.get(i).properties.NAME + " " +
-                    (totalDistance += euclidDistance(route.get(i-1).geometry.coordinates[1],
-                                                route.get(i-1).geometry.coordinates[0],
-                                                route.get(i).geometry.coordinates[1],
-                                                route.get(i).geometry.coordinates[0])));
+        try {
+            PrintWriter out = new PrintWriter(new FileWriter("solution.txt"));
+            out.println(route.get(0).properties.NAME + " " + totalDistance); //Root pool, distance is 0 by default
+            for (int i = 1; i < route.size(); i++) {
+                out.println(route.get(i).properties.NAME + " " +
+                        (totalDistance += euclidDistance(route.get(i - 1).geometry.coordinates[1],
+                                route.get(i - 1).geometry.coordinates[0],
+                                route.get(i).geometry.coordinates[1],
+                                route.get(i).geometry.coordinates[0])));
+            }
+            out.close();
+        }catch(IOException ex){
+            System.out.println("ERROR: Could not write route to solution.txt");
         }
     }
 
